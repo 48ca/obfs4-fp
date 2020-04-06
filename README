@@ -12,13 +12,21 @@ For more information about each module, look at their respective READMEs.
 
 Setup:
 
-1. Download Tor Browser and place it into fpgen/tor-browser-en_US. Install Tor (separate from the TBB) somewhere such that it can be found in the PATH.
+1. Download Tor Browser and place it into fpgen/tor-browser_en-US. Install Tor (separate from the TBB) somewhere such that it can be found in the PATH.
 
 2. Setup python3 and install the packages in requirements.txt.
 
 $ ./setup-venv.sh
 
-3. Edit fpgen/env.sh to include your information. This includes your network interface ($IF) and the bridge IP ($BRIDGE). Set $CAPDIR and $LOGFILE to suit your needs.
+3. Pull all submodules if not pulled already.
+
+$ ./pull-submodules.sh
+
+4. Setup a Go runtime environment that is up-to-date enough to build obfs4proxy. Build obfs4proxy.
+
+$ cd obfs4; ./build.sh
+
+5. Edit fpgen/env.sh to include your information. This includes your network interface ($IF) and the bridge IP ($BRIDGE). Set $CAPDIR and $LOGFILE to suit your needs.
 
 -----------------------
 
