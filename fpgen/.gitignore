@@ -1,0 +1,4 @@
+venv/
+tor-browser_en-US/**/*
+tor-data/*
+dumps/

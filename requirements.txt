@@ -1,0 +1,14 @@
+# for fpgen
+selenium
+tbselenium
+pypcapfile
+matplotlib
+IPython
+
+# for crawling
+beautifulsoup4
+pyaml
+
+# for classification
+sklearn
+pandas
