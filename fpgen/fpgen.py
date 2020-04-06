@@ -12,7 +12,7 @@ if os.getuid() != 0:
     print("Please run as root for tcpdump. (If using sudo, use sudo -E)")
     sys.exit(1)
 
-with open("crawl/good-onions-short.txt", "r") as f:
+with open("crawl/good-onions-med.txt", "r") as f:
     onions = f.read().split("\n")[:-1]
 
 for p in ("BRIDGE", "IF", "SRCMAC", "CAPDIR", "LOGFILE"):
