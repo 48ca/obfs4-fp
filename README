@@ -40,15 +40,15 @@ I. Getting packet traces.
 
 1. Start Tor.
 
-(venv) $ ./tor.sh
+$ ./tor.sh
 
 2. If you want to observe status logs during a run, tail the LOGFILE you set in env.sh.
 
-(venv) $ tail -f $LOGFILE
+$ tail -f $LOGFILE
 
 3. If you want to observe obfsproxy logs during a run, tail its log file.
 
-(venv) $ tail -f tor-data/pt_state/obfs4proxy.log
+$ tail -f tor-data/pt_state/obfs4proxy.log
 
 4. Start fpgen.
 
@@ -67,11 +67,9 @@ II. Analysis and feature extraction.
 
 (venv) $ python3 analyze.py path/to/trace.pcap
 
-To generate the CSV that represents the final fingerprints:
+2. To generate the CSV that represents the final fingerprints, run csv-gen.sh, and place the output into the fingerprints directory. The classification scripts expect the fingerprints to be placed there.
 
-2. Run csv-gen.sh, and place the output into the fingerprints directory. The classification scripts expect the fingerprints to be placed there.
-
-(venv) $ ./csv-gen.sh | tee fingerprints/FP_NAME
+(venv) $ ./csv-gen.sh | tee fingerprints/$FP_NAME.csv
 
 
 III. Classification.
