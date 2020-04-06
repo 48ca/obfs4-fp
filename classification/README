@@ -1,0 +1,5 @@
+obfsproxy default IAT modes:
+./classify.py iat0
+./classify.py iat3
+./classify.py iat0-dir
+./classify.py iat3-dir
