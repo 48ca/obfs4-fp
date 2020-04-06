@@ -1,0 +1,6 @@
+[submodule "git@github.com:jamesthoughton/obfs4"]
+	path = git@github.com:jamesthoughton/obfs4
+	url = ./obfs4
+[submodule "obfs4"]
+	path = obfs4
+	url = git@github.com:jamesthoughton/obfs4
