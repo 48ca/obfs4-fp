@@ -13,7 +13,7 @@ if os.getuid() != 0:
     sys.exit(1)
 
 with open("crawl/good-onions-med.txt", "r") as f:
-    onions = f.read().split("\n")[:-1]
+    onions = set(f.read().split("\n")[:-1])
 
 for p in ("BRIDGE", "IF", "SRCMAC", "CAPDIR", "LOGFILE"):
     print("{}:{}{}".format(p, " " * (10-len(p)), os.getenv(p)))
@@ -23,7 +23,7 @@ try:
 except EOFError:
     print()
     sys.exit(1)
-if len(i) > 1 and i[0].lower() == "n":
+if len(i) > 0 and i[0].lower() == "n":
     sys.exit(1)
 
 print("Fetching {} webpages".format(len(onions)))
@@ -33,7 +33,7 @@ stopped = False
 done = 0
 round = 0
 
-MAX_ROUNDS = 15
+MAX_ROUNDS = 40
 
 with open(os.getenv("LOGFILE"), "w") as f:
     f.write("Start trace dump at {}".format(datetime.datetime.now()))
@@ -54,11 +54,16 @@ failed = []
 def fetch():
     global done, round, failed
     urls = onions.copy()
+    failed_gen1  = set() # initial failed set
+    failed_gen2  = set() # if failed in two rounds
+    failed_final = set() # if failed in three rounds
     for r in range(MAX_ROUNDS):
         done = 0
         round = r
-        failed = []
-        for u in urls:
+        failed = set()
+        if len(failed_final) > 0:
+            print("Not fetching {} onions".format(len(failed_final)))
+        for u in urls - failed_final:
             while paused and not stopped:
                 time.sleep(1)
             if stopped:
@@ -66,19 +71,28 @@ def fetch():
             if dump(u, r):
                 done += 1
             else:
-                failed.append(u)
+                failed.add(u)
+        if len(failed) > 0:
+            print("Checking failed onions...")
+        real_failed = set()
         for u in failed:
             while paused and not stopped:
                 time.sleep(1)
             if stopped:
                 break
-            if dump(u, r):
-                done += 1
-            else:
+            if not dump(u, r):
                 print("Could not fetch {} after two attempts".format(u))
+                real_failed.add(u)
+            done += 1
+
+        failed_final |= failed_gen2 & failed_gen1 & real_failed
+        failed_gen2 = failed_gen1
+        failed_gen1 = real_failed
 
         if stopped:
             return
+        print("Iteration done")
+    print("All rounds done")
 
 
 t = threading.Thread(target=fetch)
