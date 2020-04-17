@@ -44,6 +44,12 @@ if len(capfile.packets) == 0:
     print("No packets")
     exit(1)
 
+def ts(pkt):
+    return pkt.timestamp + pkt.timestamp_ms/1000
+
+first_packet = capfile.packets[0]
+first_timestamp = ts(first_packet)
+
 for p in capfile.packets:
     eth_frame = ethernet.Ethernet(p.raw())
     tcp_packet = tcp.TCP(binascii.unhexlify(eth_frame.payload))
@@ -51,7 +57,7 @@ for p in capfile.packets:
         continue
     seqnums.add(tcp_packet.seqnum)
     ip_packet = ip.IP(binascii.unhexlify(eth_frame.payload))
-    final_timestamp = p.timestamp_ms
+    final_timestamp = ts(p) - first_timestamp
     if (ip_packet.len < 1500):
         packet_lengths[ip_packet.len] = 1
     if (ip_packet.dst == bridge):
@@ -68,7 +74,7 @@ for p in capfile.packets:
         incoming_total_bytes += ip_packet.len
 
 packet_directions = packet_directions[:5000]
-print(len(packet_directions))
+# print(len(packet_directions))
 
 total_packets = outgoing_packets + incoming_packets
 retransmissions = len(capfile.packets) - len(seqnums)
@@ -101,7 +107,7 @@ for i in range(len(packet_directions)):
         idx += 1
         dir = -1 * dir
 
-print(directions)
+# print(directions)
 
 if not noplot:
     ax_in = plt.scatter(x_in, y_in, label='in')
