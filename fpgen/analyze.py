@@ -17,13 +17,19 @@ else:
     file = argv[1]
 
 noplot = False
+batch = False
 if len(argv) > 2:
     noplot = (argv[2] == "--noplot")
+    batch  = (argv[2] == "--batchgen")
+
+if batch:
+    noplot = True
 
 testcap = open(file, 'rb')
-capfile = savefile.load_savefile(testcap, verbose=True)
+capfile = savefile.load_savefile(testcap, verbose=not batch)
 
-print(capfile)
+if not batch:
+    print(capfile)
 
 bridge = getenv("BRIDGE", "195.201.102.54").encode('ascii')
 
@@ -61,12 +67,14 @@ for p in capfile.packets:
     if (ip_packet.len < 1500):
         packet_lengths[ip_packet.len] = 1
     if (ip_packet.dst == bridge):
+        print("{:f}\t{}".format(final_timestamp, 1))
         packet_directions.append(1)
         outgoing_packets += 1
         x_out.append(p.timestamp_ms)
         y_out.append(ip_packet.len)
         outgoing_total_bytes += ip_packet.len
     else:
+        print("{:f}\t{}".format(final_timestamp, -1))
         packet_directions.append(-1)
         incoming_packets += 1
         x_in.append(p.timestamp_ms)
@@ -82,16 +90,17 @@ retransmissions = len(capfile.packets) - len(seqnums)
 # def auxprint(*args):
 #     stderr.write("{}\n".format("{}" * len(args)).format(*args))
 
-print("::> name: ", file)
-print(":: outgoing packets: ", outgoing_packets)
-print(":: incoming packets: ", incoming_packets)
-print(":: total packets: ", total_packets)
-print(":: outp/t packets: ", outgoing_packets / total_packets)
-print(":: incp/t packets: ", incoming_packets / total_packets)
-print(":: inc total bytes: ", incoming_total_bytes)
-print(":: out total bytes: ", outgoing_total_bytes)
-print(":: retransmissions: ", retransmissions)
-print(":: final timestamp: ", final_timestamp)
+if not batch:
+    print("::> name: ", file)
+    print(":: outgoing packets: ", outgoing_packets)
+    print(":: incoming packets: ", incoming_packets)
+    print(":: total packets: ", total_packets)
+    print(":: outp/t packets: ", outgoing_packets / total_packets)
+    print(":: incp/t packets: ", incoming_packets / total_packets)
+    print(":: inc total bytes: ", incoming_total_bytes)
+    print(":: out total bytes: ", outgoing_total_bytes)
+    print(":: retransmissions: ", retransmissions)
+    print(":: final timestamp: ", final_timestamp)
 
 name = file[file.rindex('/'):]
 name = name[1:name.find('.')]
@@ -107,7 +116,9 @@ for i in range(len(packet_directions)):
         idx += 1
         dir = -1 * dir
 
-# print(directions)
+if batch:
+    exit(0)
+
 
 if not noplot:
     ax_in = plt.scatter(x_in, y_in, label='in')
