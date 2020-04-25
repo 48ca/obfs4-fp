@@ -1,7 +1,7 @@
 #!/bin/bash
 
 CAPDIR=${CAPDIR:-'auto-caps'}
-FILES=$(find $CAPDIR -type f)
+FILES=$(find $CAPDIR -type f -name "*.pcap")
 
 echo -n "name,out,in,total,outp,inp,tin,tout,retransmission,finalts"
 for i in $(seq 1 1500)

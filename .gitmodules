@@ -1,6 +1,6 @@
 [submodule "obfs4"]
 	path = obfs4
 	url = git@github.com:jamesthoughton/obfs4
-[submodule "fpgen/crawl/oniontree"]
-	path = fpgen/crawl/oniontree
+[submodule "traces/crawl/oniontree"]
+	path = traces/crawl/oniontree
 	url = git@github.com:onionltd/oniontree
