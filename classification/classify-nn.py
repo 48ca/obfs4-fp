@@ -25,7 +25,8 @@ y=data['name']  # Labels
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3) # 70% training and 30% test
 
 
-clf=MLPClassifier(hidden_layer_sizes=(5000, 500), max_iter=2500)
+# clf=MLPClassifier(hidden_layer_sizes=(5000, 2500, 500, 50), solver='lbfgs')
+clf=MLPClassifier(hidden_layer_sizes=(100,), solver='lbfgs')
 
 #Train the model using the training sets y_pred=clf.predict(X_test)
 clf.fit(X_train,y_train)

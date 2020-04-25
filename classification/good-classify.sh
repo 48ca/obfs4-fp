@@ -3,7 +3,7 @@
 FP="$1"
 
 ACC="0"
-ITERS=10
+ITERS=20
 
 for i in `seq $ITERS`
 do
@@ -11,11 +11,11 @@ do
     if [[ $a > $ACC ]]
     then
         ACC=$a
-        set -x
         echo "Updated accuracy to $ACC"
+        set -x
         cp models/$FP-randomforest.sav auto-good-models/$FP-randomforest.sav
         set +x
     fi
 done
 
-echo "Finally accuracy: $ACC"
+echo "Final accuracy: $ACC"

@@ -22,11 +22,12 @@ X=data.loc[:, data.columns != 'name']
 y=data['name']  # Labels
 
 # Split dataset into training set and test set
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3) # 70% training and 30% test
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30) # 70% training and 30% test
 
 
 #Create a Gaussian Classifier
-clf=RandomForestClassifier(n_estimators=6509)
+# clf=RandomForestClassifier(n_estimators=6509)
+clf=RandomForestClassifier(n_estimators=500)
 
 #Train the model using the training sets y_pred=clf.predict(X_test)
 clf.fit(X_train,y_train)
