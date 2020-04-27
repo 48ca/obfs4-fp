@@ -29,7 +29,10 @@ for i in range(len(points)):
     plt.plot (bin_edges[1:], cdf/cdf[-1])
 
 plt.legend(labels)
+plt.xlabel('Time to full page load (seconds)')
+plt.ylabel('Fraction of pages that have loaded')
+
 plt.savefig("bw.png")
 
-plt.axis([4, 35, 0, 1])
+plt.axis([5, 30, 0.1, 1.0])
 plt.savefig("bw-trunc.png")

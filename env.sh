@@ -9,4 +9,4 @@ export LOGFILE=logs/dynaflow.log
 # export BRIDGE=46.140.72.219
 export BRIDGE=64.227.28.1
 
-source ../venv/bin/activate
+source venv/bin/activate
