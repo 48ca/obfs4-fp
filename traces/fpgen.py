@@ -34,6 +34,9 @@ done = 0
 round = 0
 
 MAX_ROUNDS = 40
+if len(sys.argv) > 1:
+    MAX_ROUNDS = int(sys.argv[1])
+    print("Performing {} rounds".format(MAX_ROUNDS))
 
 with open(os.getenv("LOGFILE"), "w") as f:
     f.write("Start trace dump at {}".format(datetime.datetime.now()))
@@ -93,6 +96,8 @@ def fetch():
             return
         print("Iteration done")
     print("All rounds done")
+    print("Failed onions:")
+    print(failed_final)
 
 
 t = threading.Thread(target=fetch)

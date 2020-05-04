@@ -1,20 +1,21 @@
 #!/usr/bin/env python3
 
-# python3 create-bw-plots.py /path/to/fingerprints/iat-{0,1,2,3,3-5}-ts.csv
+# python3 create-bw-plots.py "Bandwidth plot" /path/to/fingerprints/iat-{0,1,2,3,3-5}-ts.csv
 
 import numpy as np
 from matplotlib import pyplot as plt
 from sys import argv, exit
 
-if len(argv) < 2:
-    print("filename please")
+if len(argv) < 3:
+    print("Usage: create-bw-plots.py <title> <paths/to/csv>...")
     exit(1)
+
+title = argv[1]
 
 points = []
 labels = []
 
-for i in range(1, len(argv)):
-    fn = argv[i]
+for fn in argv[2:]:
     s = fn.rfind('/')
     e = fn.rfind('.')
     labels.append(fn[s+1:e-3].upper()) # e-3 -> remove -ts
@@ -31,7 +32,9 @@ for i in range(len(points)):
 plt.legend(labels)
 plt.xlabel('Time to full page load (seconds)')
 plt.ylabel('Fraction of pages that have loaded')
+plt.title(title)
 
+plt.axis([0, 60, 0.0, 1.0])
 plt.savefig("bw.png")
 
 plt.axis([5, 30, 0.1, 1.0])

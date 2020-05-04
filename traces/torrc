@@ -191,7 +191,7 @@ DataDirectory tor-data/
 UseBridges 1
 # This works for Ubuntu Linux, adjust the path according to your platform
 # ClientTransportPlugin obfs4 exec /usr/bin/obfs4proxy managed
-ClientTransportPlugin obfs4 exec ./obfsproxy -enableLogging -logLevel DEBUG
+ClientTransportPlugin obfs4 exec ./obfs4proxy -enableLogging -logLevel DEBUG
 
 # Bridge obfs4 98.243.200.229:1025 6ABC00A82B5A76E9B30BAED58AC7911E6BD50ADB
 # Bridge obfs4 46.140.72.219:40000 C5C855C5B85B9179B163A35674CF62D926A7EF5B cert=e5iGLIVLWy+8/as3xDoMKPr/3/TKzEt9dZZJXktxLwxci7csi8JH2TC2PQnFo4CW/sFFaw iat-mode=0
