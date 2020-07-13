@@ -36,6 +36,8 @@ $ cd obfs4; ./build.sh
 
 ## Usage
 
+Before doing anything, make sure your environment is up-to-date and that you have sourced `fpgen/env.sh`.
+
 ### Getting packet traces.
 
 (Working directory: traces)
