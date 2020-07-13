@@ -30,7 +30,7 @@ $ ./pull-submodules.sh
 $ cd obfs4; ./build.sh
 ```
 
-5. Edit fpgen/env.sh to include your information. This includes your network interface ($IF) and the bridge IP ($BRIDGE). Set $CAPDIR and $LOGFILE to suit your needs.
+5. Edit fpgen/env.sh to include your information. This includes your network interface ($IF) and the bridge IP ($BRIDGE). Set $CAPDIR and $LOGFILE to suit your needs. `source` this file after you are done making changes. These environment variables are used by several scripts in this repository.
 
 6. Start a bridge and configure it to run obfs4proxy. Edit torrc here to ensure that the Tor instance here connects to the bridge via obfs4proxy.
 
